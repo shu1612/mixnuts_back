@@ -62,6 +62,9 @@ def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    
+    # password を参照（ただしチェックは行わない）
+    _ = password  # passwordをダミーで参照
 
     # 任意のメールアドレス・パスワードでaccess_tokenを発行
     access_token = create_access_token(identity=username)
