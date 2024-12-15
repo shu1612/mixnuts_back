@@ -59,14 +59,15 @@ def register():
 # ログインエンドポイント
 @app.route('/login', methods=['POST'])
 def login():
+    # JSONリクエストの読み取り
     data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
-    
-    # password を参照（ただしチェックは行わない）
-    _ = password  # passwordをダミーで参照
+    username = data.get('username', 'default_user')  # デフォルト値を設定
+    password = data.get('password', '')  # デフォルト値を設定
 
-    # 任意のメールアドレス・パスワードでaccess_tokenを発行
+    # ダミーで password を参照
+    _ = password
+
+    # 任意のユーザー名でアクセストークンを生成
     access_token = create_access_token(identity=username)
     return jsonify(access_token=access_token), 200
 
