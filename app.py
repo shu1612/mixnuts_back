@@ -59,17 +59,20 @@ def register():
 # ログインエンドポイント
 @app.route('/login', methods=['POST'])
 def login():
-    # JSONリクエストの読み取り
     data = request.get_json()
-    username = data.get('username', 'default_user')  # デフォルト値を設定
-    password = data.get('password', '')  # デフォルト値を設定
+    username = data.get('username')
+    password = data.get('password')
 
-    # ダミーで password を参照
-    _ = password
+    # ユーザーをデータベースから取得
+    user = User.query.filter_by(username=username).first()
 
-    # 任意のユーザー名でアクセストークンを生成
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token), 200
+    # ユーザーが存在し、パスワードが一致する場合
+    if user and check_password_hash(user.password, password):
+        access_token = create_access_token(identity=user.username)
+        return jsonify(access_token=access_token), 200
+
+    return jsonify({"message": "ユーザー名またはパスワードが正しくありません"}), 401
+
 
 # データベース初期化用
 @app.before_request
