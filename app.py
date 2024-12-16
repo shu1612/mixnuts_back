@@ -82,7 +82,7 @@ def home():
 
 
 # HotPepper APIの設定
-# HOTPEPPER_API_KEY = os.getenv('HOTPEPPER_API_KEY')
+HOTPEPPER_API_KEY = os.getenv('HOTPEPPER_API_KEY')
 HOTPEPPER_API_URL = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
 
 @app.route('/api/hotpepper/<genre>', methods=['GET'])
@@ -96,7 +96,7 @@ def hotpepper(genre):
     hotpepper_response = requests.get(
         HOTPEPPER_API_URL,
         params={
-            'key': 'd63e6744e0fcbe33',
+            'key': HOTPEPPER_API_KEY,
             'keyword': query,
             'genre': genre,
             'range': 2,      # 半径の範囲: 2km
