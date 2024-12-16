@@ -14,75 +14,75 @@ from dotenv import load_dotenv
 
 
 app = Flask(__name__)
-app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+#app.config['JWT_SECRET_KEY'] = 'your_jwt_secret_key'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+#app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 CORS(app)
-jwt = JWTManager(app)
-db = SQLAlchemy(app)
+#jwt = JWTManager(app)
+#db = SQLAlchemy(app)
 
 # .envファイルの読み込み
 load_dotenv()
 
 # ユーザーモデルの定義
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    password = db.Column(db.String(128), nullable=False)
+# class User(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     username = db.Column(db.String(80), unique=True, nullable=False)
+#     password = db.Column(db.String(128), nullable=False)
 
 # ユーザー登録エンドポイント
-@app.route('/register', methods=['POST'])
-def register():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
+# @app.route('/register', methods=['POST'])
+# def register():
+#     data = request.get_json()
+#     username = data.get('username')
+#     password = data.get('password')
 
-    # 必須フィールドのチェック
-    if not username or not password:
-        return jsonify({"message": "ユーザー名とパスワードを入力してください"}), 400
+#     # 必須フィールドのチェック
+#     if not username or not password:
+#         return jsonify({"message": "ユーザー名とパスワードを入力してください"}), 400
 
-    # ユーザー名のユニークチェック
-    if User.query.filter_by(username=username).first():
-        return jsonify({"message": "このユーザー名は既に登録されています"}), 400
+#     # ユーザー名のユニークチェック
+#     if User.query.filter_by(username=username).first():
+#         return jsonify({"message": "このユーザー名は既に登録されています"}), 400
 
-    # パスワードをハッシュ化して保存
-    hashed_password = generate_password_hash(password)
-    new_user = User(username=username, password=hashed_password)
-    try:
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify({"message": "登録が完了しました"}), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"message": "登録中にエラーが発生しました"}), 500
+#     # パスワードをハッシュ化して保存
+#     hashed_password = generate_password_hash(password)
+#     new_user = User(username=username, password=hashed_password)
+#     try:
+#         db.session.add(new_user)
+#         db.session.commit()
+#         return jsonify({"message": "登録が完了しました"}), 201
+#     except Exception as e:
+#         db.session.rollback()
+#         return jsonify({"message": "登録中にエラーが発生しました"}), 500
 
 # ログインエンドポイント
-@app.route('/login', methods=['POST'])
-def login():
-    data = request.get_json()
-    username = data.get('username')
-    password = data.get('password')
+# @app.route('/login', methods=['POST'])
+# def login():
+#     data = request.get_json()
+#     username = data.get('username')
+#     password = data.get('password')
     
-    # password を参照（ただしチェックは行わない）
-    _ = password  # passwordをダミーで参照
+#     # password を参照（ただしチェックは行わない）
+#     _ = password  # passwordをダミーで参照
 
-    # 任意のメールアドレス・パスワードでaccess_tokenを発行
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token), 200
+#     # 任意のメールアドレス・パスワードでaccess_tokenを発行
+#     access_token = create_access_token(identity=username)
+#     return jsonify(access_token=access_token), 200
 
 
-# データベース初期化用
-@app.before_request
-def create_tables():
-    db.create_all()
+# # データベース初期化用
+# @app.before_request
+# def create_tables():
+#     db.create_all()
 
-@app.route('/')
-def home():
-    return "Hello, welcome to the API!", 200
+# @app.route('/')
+# def home():
+#     return "Hello, welcome to the API!", 200
 
 
 # HotPepper APIの設定
-HOTPEPPER_API_KEY = os.getenv('HOTPEPPER_API_KEY')
+# HOTPEPPER_API_KEY = os.getenv('HOTPEPPER_API_KEY')
 HOTPEPPER_API_URL = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
 
 @app.route('/api/hotpepper/<genre>', methods=['GET'])
