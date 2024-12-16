@@ -1,16 +1,16 @@
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from urllib.parse import unquote
-from openai import OpenAI
+#from urllib.parse import unquote
+#from openai import OpenAI
 import requests
-import os
-from flask_jwt_extended import JWTManager, create_access_token
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import check_password_hash, generate_password_hash
-import openai
+#import os
+# from flask_jwt_extended import JWTManager, create_access_token
+# from flask_sqlalchemy import SQLAlchemy
+# from werkzeug.security import check_password_hash, generate_password_hash
+#import openai
 from datetime import datetime, timedelta
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 
 app = Flask(__name__)
