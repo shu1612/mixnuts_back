@@ -96,7 +96,7 @@ def hotpepper(genre):
     hotpepper_response = requests.get(
         HOTPEPPER_API_URL,
         params={
-            'key': HOTPEPPER_API_KEY,
+            'key': 'd63e6744e0fcbe33',
             'keyword': query,
             'genre': genre,
             'range': 2,      # 半径の範囲: 2km
