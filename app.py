@@ -22,7 +22,7 @@ CORS(app)
 #db = SQLAlchemy(app)
 
 # .envファイルの読み込み
-load_dotenv()
+# load_dotenv()
 
 # ユーザーモデルの定義
 # class User(db.Model):
@@ -76,9 +76,9 @@ load_dotenv()
 # def create_tables():
 #     db.create_all()
 
-# @app.route('/')
-# def home():
-#     return "Hello, welcome to the API!", 200
+@app.route('/')
+def home():
+    return "Hello, welcome to the API!", 200
 
 
 # HotPepper APIの設定
