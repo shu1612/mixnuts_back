@@ -62,16 +62,13 @@ def login():
     data = request.get_json()
     username = data.get('username')
     password = data.get('password')
+    
+    # password を参照（ただしチェックは行わない）
+    _ = password  # passwordをダミーで参照
 
-    # ユーザーをデータベースから取得
-    user = User.query.filter_by(username=username).first()
-
-    # ユーザーが存在し、パスワードが一致する場合
-    if user and check_password_hash(user.password, password):
-        access_token = create_access_token(identity=user.username)
-        return jsonify(access_token=access_token), 200
-
-    return jsonify({"message": "ユーザー名またはパスワードが正しくありません"}), 401
+    # 任意のメールアドレス・パスワードでaccess_tokenを発行
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token), 200
 
 
 # データベース初期化用
