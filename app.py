@@ -82,7 +82,7 @@ def home():
 
 
 # HotPepper APIの設定
-HOTPEPPER_API_KEY = os.getenv('HOTPEPPER_API_KEY')
+# HOTPEPPER_API_KEY = os.getenv('HOTPEPPER_API_KEY')
 HOTPEPPER_API_URL = "http://webservice.recruit.co.jp/hotpepper/gourmet/v1/"
 
 @app.route('/api/hotpepper/<genre>', methods=['GET'])
